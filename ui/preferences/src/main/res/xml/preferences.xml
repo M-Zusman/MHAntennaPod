@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:search="http://schemas.android.com/apk/res-auto">
 
     <com.bytehamster.lib.preferencesearch.SearchPreference
@@ -44,30 +43,23 @@
     <Preference
             android:key="notifications"
             android:title="@string/notification_pref_fragment"
-            android:icon="@drawable/ic_notifications"/>
+            android:icon="@drawable/ic_notifications" />
 
     <PreferenceCategory
             android:key="project"
             android:title="@string/project_pref">
         <Preference
-            android:key="prefDocumentation"
-            android:title="@string/documentation_support"
-            android:icon="@drawable/ic_questionmark" />
+                android:key="copyrightNotice"
+                android:title="@string/copyright"
+                android:summary="@string/app_is_based_on_antennapod"
+                android:icon="@drawable/ic_contribute" />
         <Preference
-            android:key="prefViewForum"
-            android:title="@string/visit_user_forum"
-            android:icon="@drawable/ic_chat" />
+                android:key="prefSendBugReport"
+                android:title="@string/bug_report_title"
+                android:icon="@drawable/ic_bug" />
         <Preference
-            android:key="prefContribute"
-            android:title="@string/pref_contribute"
-            android:icon="@drawable/ic_contribute" />
-        <Preference
-            android:key="prefSendBugReport"
-            android:title="@string/bug_report_title"
-            android:icon="@drawable/ic_bug" />
-        <Preference
-            android:key="prefAbout"
-            android:title="@string/about_pref"
-            android:icon="@drawable/ic_info" />
+                android:key="prefAbout"
+                android:title="@string/about_pref"
+                android:icon="@drawable/ic_info" />
     </PreferenceCategory>
 </PreferenceScreen>

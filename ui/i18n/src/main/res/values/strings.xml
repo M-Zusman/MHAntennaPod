@@ -587,7 +587,8 @@
     <string name="special_thanks">Special thanks</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="licenses">Licenses</string>
-    <string name="licenses_summary">AntennaPod uses other great software</string>
+    <!-- MH-FEATURE: Change app name -->
+    <string name="licenses_summary">MakingHistory uses other great software</string>
 
     <!-- Search -->
     <string name="search_status_no_results">No results were found</string>
@@ -965,4 +966,11 @@
 
     <string name="echo_share_heading">My favorite podcasts</string>
     <string name="echo_share">My year %d in podcasts. #AntennaPodEcho</string>
+
+    <!-- MH-FEATURE: Copyright strings -->
+    <string name="copyright">Copyright</string>
+    <string name="notice">Notice</string>
+    <string name="visit">Visit Source</string>
+    <string name="copyright_notice">This application is based on AntennaPod.\nCopyright © AntennaPod Developers.\nThis version is licensed under the GNU General Public License v3.\nThe AntennaPod team does NOT provide support for this unofficial version.</string>
+    <string name="app_is_based_on_antennapod">This app is based on the open source project of AntennaPod.</string>
 </resources>

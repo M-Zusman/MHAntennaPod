@@ -1,5 +1,6 @@
 package de.danoeh.antennapod.ui.screen.preferences;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -10,6 +11,7 @@ import androidx.preference.Preference;
 
 import com.bytehamster.lib.preferencesearch.SearchConfiguration;
 import com.bytehamster.lib.preferencesearch.SearchPreference;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import de.danoeh.antennapod.R;
 import de.danoeh.antennapod.ui.common.IntentUtils;
@@ -31,6 +33,9 @@ public class MainPreferencesFragment extends AnimatedPreferenceFragment {
     private static final String PREF_NOTIFICATION = "notifications";
     private static final String PREF_CONTRIBUTE = "prefContribute";
 
+    //MH-FEATURE: Source code url.
+    private static final String SOURCE_CODE_URL = "https://github.com/M-Zusman/MHAntennaPod/tree/mh_develop";
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences);
@@ -41,27 +46,20 @@ public class MainPreferencesFragment extends AnimatedPreferenceFragment {
         // and afterwards remove the following lines. Please keep in mind that AntennaPod is licensed under the GPL.
         // This means that your application needs to be open-source under the GPL, too.
         // It must also include a prominent copyright notice.
-        int packageHash = getContext().getPackageName().hashCode();
-        if (packageHash != 1790437538 && packageHash != -1190467065) {
-            findPreference(PREF_CATEGORY_PROJECT).setVisible(false);
-            Preference copyrightNotice = new Preference(getContext());
-            copyrightNotice.setIcon(R.drawable.ic_info_white);
-            copyrightNotice.getIcon().mutate()
-                    .setColorFilter(new PorterDuffColorFilter(0xffcc0000, PorterDuff.Mode.MULTIPLY));
-            copyrightNotice.setSummary("This application is based on AntennaPod."
-                    + " The AntennaPod team does NOT provide support for this unofficial version."
-                    + " If you can read this message, the developers of this modification"
-                    + " violate the GNU General Public License (GPL).");
-            findPreference(PREF_CATEGORY_PROJECT).getParent().addPreference(copyrightNotice);
-        } else if (packageHash == -1190467065) {
-            Preference debugNotice = new Preference(getContext());
-            debugNotice.setIcon(R.drawable.ic_info_white);
-            debugNotice.getIcon().mutate()
-                    .setColorFilter(new PorterDuffColorFilter(0xffcc0000, PorterDuff.Mode.MULTIPLY));
-            debugNotice.setOrder(-1);
-            debugNotice.setSummary("This is a development version of AntennaPod and not meant for daily use");
-            findPreference(PREF_CATEGORY_PROJECT).getParent().addPreference(debugNotice);
-        }
+
+        //MH-FEATURE: Add copyright dialog
+        findPreference("copyrightNotice").setOnPreferenceClickListener(preference -> {
+            new MaterialAlertDialogBuilder(getContext())
+                    .setTitle(R.string.notice)
+                    .setMessage(R.string.copyright_notice)
+                    .setNegativeButton(R.string.visit, (dialogInterface, i) ->
+                            IntentUtils.openInBrowser(getContext(), SOURCE_CODE_URL))
+                    .setPositiveButton(R.string.close_label, null)
+                    .show();
+
+            return true;
+        });
+
     }
 
     @Override
@@ -103,22 +101,9 @@ public class MainPreferencesFragment extends AnimatedPreferenceFragment {
                     return true;
                 }
         );
-        findPreference(PREF_DOCUMENTATION).setOnPreferenceClickListener(preference -> {
-            IntentUtils.openInBrowser(getContext(),
-                    IntentUtils.getLocalizedWebsiteLink(getContext()) + "/documentation/");
-            return true;
-        });
-        findPreference(PREF_VIEW_FORUM).setOnPreferenceClickListener(preference -> {
-            IntentUtils.openInBrowser(getContext(), "https://forum.antennapod.org/");
-            return true;
-        });
-        findPreference(PREF_CONTRIBUTE).setOnPreferenceClickListener(preference -> {
-            IntentUtils.openInBrowser(getContext(),
-                    IntentUtils.getLocalizedWebsiteLink(getContext()) + "/contribute/");
-            return true;
-        });
         findPreference(PREF_SEND_BUG_REPORT).setOnPreferenceClickListener(preference -> {
-            startActivity(new Intent(getActivity(), BugReportActivity.class));
+            //MH-FEATURE: Open the source code in browser.
+            IntentUtils.openInBrowser(getContext(), SOURCE_CODE_URL);
             return true;
         });
     }
