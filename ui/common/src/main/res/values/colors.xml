@@ -19,11 +19,12 @@
     <color name="seek_background_light">#90000000</color>
     <color name="seek_background_dark">#905B5B5B</color>
 
-    <color name="accent_light">#0078C2</color>
-    <color name="accent_dark">#3D8BFF</color>
-    
-    <color name="gradient_000">#364ff3</color>
-    <color name="gradient_025">#2E6FF6</color>
-    <color name="gradient_075">#1EB0FC</color>
-    <color name="gradient_100">#16d0ff</color>
+    <color name="accent_light">#E61927</color>
+    <color name="accent_dark">#B3121D</color>
+
+    <color name="gradient_000">#F61C2A</color>
+    <color name="gradient_025">#F62F3B</color>
+    <color name="gradient_075">#F64551</color>
+    <color name="gradient_100">#F65A65</color>
+
 </resources>
