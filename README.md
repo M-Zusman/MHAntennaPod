@@ -1,6 +1,6 @@
 # Official Making History Podcast App
 
-This project is a development branch of **MyApp**, based on [AntennaPod](https://github.com/AntennaPod/AntennaPod), an open-source podcast manager.
+This project is a development branch of **Making History**, based on [AntennaPod](https://github.com/AntennaPod/AntennaPod), an open-source podcast manager.
 
 ## License
 
