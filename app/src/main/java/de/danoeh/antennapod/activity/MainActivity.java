@@ -41,6 +41,7 @@ import de.danoeh.antennapod.R;
 import de.danoeh.antennapod.event.EpisodeDownloadEvent;
 import de.danoeh.antennapod.event.FeedUpdateRunningEvent;
 import de.danoeh.antennapod.event.MessageEvent;
+import de.danoeh.antennapod.making_history.MHDefaultFeedLoader;
 import de.danoeh.antennapod.model.download.DownloadStatus;
 import de.danoeh.antennapod.net.download.service.feed.FeedUpdateManagerImpl;
 import de.danoeh.antennapod.net.download.serviceinterface.DownloadServiceInterface;
@@ -123,6 +124,10 @@ public class MainActivity extends CastEnabledActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         recycledViewPool.setMaxRecycledViews(R.id.view_type_episode_item, 25);
+
+        //MH-FEATURE: Call preload class
+        MHDefaultFeedLoader.loadDefaultOPMLIfNeeded(this);
+
         checkFirstLaunch();
 
         drawerLayout = findViewById(R.id.drawer_layout);
