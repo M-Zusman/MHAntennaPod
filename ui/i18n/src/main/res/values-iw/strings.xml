@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">עושים היסטוריה</string>
     <!--Activity and fragment titles-->
     <string name="feed_update_receiver_name">עדכון מינויים</string>
     <string name="statistics_label">סטטיסטיקה</string>
