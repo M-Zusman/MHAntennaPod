@@ -265,7 +265,8 @@ public abstract class UserPreferences {
     }
 
     public static FeedOrder getFeedOrder() {
-        String value = prefs.getString(PREF_DRAWER_FEED_ORDER, "" + FeedOrder.COUNTER.id);
+        //MH-FEATURE: Set the default order as MOST_RECENT_EPISODE
+        String value = prefs.getString(PREF_DRAWER_FEED_ORDER, "" + FeedOrder.MOST_RECENT_EPISODE.id);
         return FeedOrder.fromOrdinal(Integer.parseInt(value));
     }
 
