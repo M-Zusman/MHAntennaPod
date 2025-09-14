@@ -223,7 +223,8 @@
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:enforceNavigationBarContrast" tools:targetApi="q">false</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/launcher_animate</item>
+        //MH-FEATURE: replace the splash screen logo
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo_splash_screen</item>
     </style>
 
     <style name="Theme.AntennaPod.Splash.Translucent" parent="Theme.AntennaPod.Splash">
