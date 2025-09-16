@@ -14,6 +14,8 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import de.danoeh.antennapod.model.feed.Feed;
 import de.danoeh.antennapod.net.download.serviceinterface.FeedUpdateManager;
@@ -28,10 +30,10 @@ import okhttp3.Response;
 
 public class MHDefaultFeedLoader {
     private final static String TAG = "MHDefaultFeedLoader";
-    private final static String OPML_FEED_URL =
-            "https://firebasestorage.googleapis.com/v0/b/makinghistory-1579519443087.appspot.com/o/default_opml.xml?alt=media";
+    private final static String OPML_FEED_URL = "https://firebasestorage.googleapis.com/v0/b/makinghistory-1579519443087.appspot.com/o/default_opml.xml?alt=media";
     private final static String SHARED_PREFERENCES_NAME = "MH_SHARED_PREFERENCES";
     private final static String OPML_HASH_PREF_NAME = "OPML_HASH";
+    private final static String UNWANTED_FEEDS_LIST_PREF_NAME = "UNWANTED_FEEDS_LIST";
 
     public static void loadDefaultOPMLIfNeeded(final Activity activity) {
         Request request = new Request.Builder().url(OPML_FEED_URL).build();
@@ -59,6 +61,7 @@ public class MHDefaultFeedLoader {
                         return;
                     }
 
+                    Set<String> unwantedPodcasts = prefs.getStringSet(UNWANTED_FEEDS_LIST_PREF_NAME, Collections.emptySet());
 
                     final InputStream opmlStream = new ByteArrayInputStream(
                             opmlData.getBytes(StandardCharsets.UTF_8));
@@ -79,7 +82,11 @@ public class MHDefaultFeedLoader {
                                 feed.setItems(Collections.emptyList());
 
                                 // Save feed in DB
-                                FeedDatabaseWriter.updateFeed(activity, feed, false);
+                                if (!unwantedPodcasts.contains(element.getXmlUrl())) {
+                                    FeedDatabaseWriter.updateFeed(activity, feed, false);
+
+                                    MHDefaultFeedLoader.addUnwantedFeedToList(activity, element.getXmlUrl());
+                                }
                             }
 
                             // Finally, trigger a feed update for all new feeds
@@ -99,4 +106,17 @@ public class MHDefaultFeedLoader {
         });
     }
 
+    /***
+     * Adds a podcast to the list of unwanted podcasts, this happends when the user decides to remove
+     * a podcast from the list, and will make the automatic podcast downloader ignore this podcast
+     * in later loadings.
+     */
+    public static void addUnwantedFeedToList(Context context, String feedURL)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_MULTI_PROCESS);
+        Set<String> unwantedPodcasts = prefs.getStringSet(UNWANTED_FEEDS_LIST_PREF_NAME, new HashSet<String>());
+        Set<String> newUnwantedPodcasts = new HashSet<String>(unwantedPodcasts);
+        newUnwantedPodcasts.add(feedURL);
+        prefs.edit().putStringSet(UNWANTED_FEEDS_LIST_PREF_NAME, newUnwantedPodcasts).apply();
+    }
 }
