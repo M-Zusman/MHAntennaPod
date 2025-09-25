@@ -13,7 +13,7 @@ android {
         //MH-FEATURE: applicationId has changed
         applicationId "de.danoeh.antennapod_mh"
 
-        versionCode 173000008
+        versionCode 173000009
         versionName "3.9.0"
 
         javaCompileOptions {
